@@ -494,7 +494,8 @@ exports.login = async (req, res) => {
     if (!employee) {
       return res.status(404).json({ msg: 'Invalid User' });
     }
-
+    
+console.log(employee.password)
     // Compare the provided password with the employee's hashed password
     const isMatch = await bcrypt.compare(password, employee.password);
 

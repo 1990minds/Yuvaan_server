@@ -1,4 +1,5 @@
 
+const { number } = require('joi');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -13,7 +14,11 @@ const supplierOrderSchema = new Schema({
     },
     products: {
         type: Schema.Types.ObjectId,
-        ref:"specialProducts"
+        ref: "specialProducts"
+    },
+    subProducts: {
+        type: Schema.Types.ObjectId,
+        ref: "subProducts"
     },
     total: {
         type: Number,
@@ -35,9 +40,16 @@ const supplierOrderSchema = new Schema({
         type: Number,
         default: 0,
     },
+    book_date: {
+        type: Date,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
+    },
+    utr_number: {
+        type: String,
+        default: "",
     },
 
 }, { timestamps: true });
