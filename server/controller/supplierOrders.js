@@ -223,7 +223,7 @@ const nanoid = customAlphabet("ABCDEFGHGHIJKLMNOPQRSTUVWXYZ1234567890", 6);
 // Create a new Supplier Order
 exports.createSupplierOrder = async (req, res) => {
     try {
-        const {   products, total, name, order_status, employer,employeeCount } = req.body;
+        const {   products, total, name, order_status, employer,employeeCount,book_date,subProducts } = req.body;
 
         const newOrder = new SupplierOrder({
             orderID:`ORDER_${nanoid()}`,
@@ -232,7 +232,9 @@ exports.createSupplierOrder = async (req, res) => {
             name,
             order_status,
             employer,
-            employeeCount
+            employeeCount,
+            book_date,
+            subProducts
         });
 
         await newOrder.save();
@@ -245,7 +247,7 @@ exports.createSupplierOrder = async (req, res) => {
 // Get all Supplier Orders
 exports.getAllSupplierOrders = async (req, res) => {
     try {
-        const orders = await SupplierOrder.find().populate("employer products");
+        const orders = await SupplierOrder.find().populate("employer products subProducts");
         res.status(200).json({ success: true, data: orders });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server Error", error: error.message });
@@ -256,7 +258,7 @@ exports.getAllSupplierOrders = async (req, res) => {
 // Get a single Employer Orders by ID
 exports.getEmployerOrderById = async (req, res) => {
   try {
-      const order = await SupplierOrder.find({employer:req.params.id}).populate("employer products");
+      const order = await SupplierOrder.find({employer:req.params.id}).populate("employer products subProducts");
 
       if (!order) {
           return res.status(404).json({ success: false, message: "Order not found" });
@@ -271,7 +273,7 @@ exports.getEmployerOrderById = async (req, res) => {
 // Get a single Supplier Order by ID
 exports.getSupplierOrderById = async (req, res) => {
     try {
-        const order = await SupplierOrder.findById(req.params.id).populate("employer products");
+        const order = await SupplierOrder.findById(req.params.id).populate("employer products subProducts");
 
         if (!order) {
             return res.status(404).json({ success: false, message: "Order not found" });

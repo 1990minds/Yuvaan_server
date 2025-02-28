@@ -6,13 +6,19 @@ const subProductSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'supplier',
     },
+    session_type: {
+        type: String,
+    },
+    product_type: {
+        type: String,
+        required: true
+    },
     sub_pro_name: {
         type: String,
         required: true
     },
     description: {
         type: String,
-        required: true
     },
     pricing: {
         costPerService: {
